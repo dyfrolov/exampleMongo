@@ -4,7 +4,7 @@
   <groupId>myExampleGroup</groupId>
   <artifactId>mongoExample</artifactId>
   <name>ExampleMongoName</name>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <description>Example for Mongo</description>
   <build>
     <plugins>

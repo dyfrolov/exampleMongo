@@ -26,11 +26,19 @@ import mongoExample.entities.TestCollection;
 public class MongoExampleMain {
 	public static final String PROP_MONGO_CONNECTION = "mongo-connection-string";
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		String configFilePathName = "src/main/resources/properties.properties";
-		//mongodb+srv://root:root1@cluster0-4yzu8.mongodb.net/storehouse?retryWrites=true&w=majority
 		Properties props = new Properties();
-//		props.load(new FileInputStream(new File(configFilePathName)));
-		props.load(MongoExampleMain.class.getResourceAsStream("/properties.properties"));
+		try {
+			String configFilePathName = 
+					new File(MongoExampleMain.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getAbsolutePath()
+					+
+					"/properties.properties";
+			props.load(new FileInputStream(new File(configFilePathName)));
+		}catch(Exception e) {
+			System.out.println("----------\ncan't find file properties.properties in the JAR's directory,\nresource from JAR file used\n------------");
+			props.load(MongoExampleMain.class.getResourceAsStream("/properties.properties"));
+		}
+//		String configFilePathName = "src/main/resources/properties.properties";
+		//mongodb+srv://root:root1@cluster0-4yzu8.mongodb.net/storehouse?retryWrites=true&w=majority
 		String mongoConnectionString = props != null && props.getProperty(PROP_MONGO_CONNECTION)!= null 
 				? props.getProperty("mongo-connection-string")
 				:null;
